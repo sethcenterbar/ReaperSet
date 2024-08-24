@@ -29,7 +29,7 @@ function setTempoMap(current_position, tempoMarkers, targetProject)
     -- Paste the copied tempo map
 
     for _, marker in ipairs(tempoMarkers) do
-        reaper.SetTempoTimeSigMarker(targetProject, -1, marker[1] + current_position, -1, -1, marker[2], marker[3], marker[4], marker[5], false)
+        reaper.SetTempoTimeSigMarker(targetProject, -1, current_position, -1, -1, marker[2], marker[3], marker[4], marker[5], false)
     end
 end
 
