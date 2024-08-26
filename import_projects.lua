@@ -4,10 +4,12 @@
 
 
 -- Todo: Configure Tracks (Start from a template?)
--- Todo: Configure Template(s)
+
+-- Load project template
+local template = "/Users/<youruser>/Library/Application Support/REAPER/ProjectTemplates/<yourtemplate>.RPP"
 
 -- Load each project and concatenate tracks with regions and tempo maps
-local dir = "/Users/sethcenterbar/ReaperHacking/"
+local dir = "/Users/<youruser>/ReaperHacking/"
 project_files = {
     dir .. "song2/song2.RPP",
     dir .. "song3/song3.RPP",
@@ -37,6 +39,8 @@ local date_string = os.date("%Y-%m-%d_%H-%M-%S")
 
 local setlist = dir .. "setlists/" .. date_string .. "setlist.rpp"
 reaper.Main_OnCommand(40859, 0)  -- New Project Tab
+
+reaper.Main_openProject(template) -- Open the project template after opening a new tab
 
 -- Configure Setlist Project
 -- Set the timebase 
@@ -70,6 +74,7 @@ for index, project in ipairs(project_files) do
     local project_name = filename_with_extension:gsub("%.RPP$", "")
     reaper.AddProjectMarker(setlist, true, region_start, region_end, project_name, index)
 
+    -- Replace with your custom command GUID of Transport: Stop + Regions: Go to next region after...
     stop_and_go_cmd = reaper.NamedCommandLookup("_5be53a17badd48e39dcbc5f1482d9f49")
     -- Add Stop Marker that stops playback and moves playhead to next region
     reaper.AddProjectMarker(setlist, false, region_end - 1, 0, "!" .. stop_and_go_cmd, index)
